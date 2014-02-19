@@ -3,7 +3,7 @@ define(['angular', 'angularResource', 'kakao'], function (angular) {
   
   angular.module('mainServices', [ 'ngResource' ])
     .factory('Content', [ '$rootScope', '$resource', function($rootScope, $resource) {
-      return $resource($rootScope.appInfo.api.baseUrl+'/api/gag/article/:id');
+      return $resource($rootScope.appInfo.api.baseUrl+'/api/greenlight/article/:id');
     }])
     .factory('MultiContentLoader', [ 'Content', '$q', function(Content, $q) {
       return function(page, type, userId) {
@@ -14,10 +14,10 @@ define(['angular', 'angularResource', 'kakao'], function (angular) {
 
         switch(type) {
           case 'trends':
-            order = '(recent_vote_count+recent_view_count) desc';
+            order = 'created desc';
             break;
           case 'best':
-            order = 'vote_count desc, created desc';
+            order = 'count_lights desc, created desc';
             break;
           case 'new':
             order = 'created desc';
@@ -78,12 +78,12 @@ define(['angular', 'angularResource', 'kakao'], function (angular) {
     }])
     
     .factory('Like', [ '$rootScope', '$resource', function($rootScope, $resource) {
-      return $resource($rootScope.appInfo.api.baseUrl+'/api/kakaoapp/like/:like_id');
+      return $resource($rootScope.appInfo.api.baseUrl+'/api/greenlight/like/:like_id');
     }])
     .factory('LikeView', [ 'Like', '$q', function(Like, $q) {
       return function(contentId, userId) {
         var delay = $q.defer();
-        Like.get({ 'app_id' : contentId, 'user_id' : userId}, function(res) {
+        Like.get({ 'article_id' : contentId, 'user_id' : userId}, function(res) {
           delay.resolve(res);
         }, function(res) {
           delay.reject(res);
@@ -94,7 +94,7 @@ define(['angular', 'angularResource', 'kakao'], function (angular) {
     .factory('LikeOn', [ 'Like', '$q', function(Like, $q) {
       return function(contentId, userId) {
         var delay = $q.defer();
-        Like.save({ 'app_id': contentId, 'user_id': userId}, function(res) {
+        Like.save({ 'article_id': contentId, 'user_id': userId}, function(res) {
           delay.resolve(res);
         }, function(res) {
           delay.reject(res);
@@ -105,7 +105,7 @@ define(['angular', 'angularResource', 'kakao'], function (angular) {
     .factory('LikeOff', [ 'Like', '$q', function(Like, $q) {
       return function(contentId, userId, likeId) {
         var delay = $q.defer();
-        Like.delete({ 'app_id': contentId, 'user_id': userId, 'like_id': likeId}, function(res) {
+        Like.delete({ 'article_id': contentId, 'user_id': userId, 'like_id': likeId}, function(res) {
           delay.resolve(res);
         }, function(res) {
           delay.reject(res);

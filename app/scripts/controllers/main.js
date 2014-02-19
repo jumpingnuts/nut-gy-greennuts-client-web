@@ -49,16 +49,11 @@ function (angular, $) {
           $scope.isLoad = true;
           new MultiContentLoader($scope.contents.page, $scope.contents.type, $scope.userInfo.id).then(function(res){
             if(res.length > 0) {
-              for(var i in res) {
-                if(res[i].items) {
-                  res[i].items = angular.fromJson(res[i].items)[0];
-                  res[i].items.name = res[i].items.name != undefined ? res[i].items.name.substring(0, 55) : '';
-                }
-              }
               $scope.contents.data = $scope.contents.data.concat(res);
               $scope.contents.page++;
               $scope.isLoad = false;
             }
+            console.log(res);
           });
         };
         $scope.listLoad();
@@ -96,30 +91,13 @@ function (angular, $) {
       'NativeFunc',
       function($scope, $sce, $route, $routeParams, md5, content, LikeView, LikeOn, LikeOff, ShareFunc, NativeFunc){
         if(!content.id) { $scope.move('/list/trends'); }
-      
-        $scope.inputName = '';
         $scope.result = '';
         $scope.like = {
           'light' : false,
           'text' : {false: '꺼짐', true: '켜짐'},
           'id' : null
         };
-
-        content.items = angular.fromJson(content.items);
-        content.content = content.items[0].name;
-        content.thumb = "";
-        for(var j in content.items) {
-          if(content.items[j].movie) {
-            content.thumb += content.items[j].thumb+"|";
-            content.items[j].movie = $sce.trustAsResourceUrl(content.items[j].movie);
-          } else {
-            content.thumb += content.items[j].image+"|";
-          }
-        }
-        content.thumb = content.thumb.substring(0, content.thumb.lastIndexOf("|"));
         $scope.content = content;
-
-//console.log($scope.content);
 
         if($scope.isLogin()) {
           new LikeView($scope.content.id, $scope.userInfo.id).then(function(res){
@@ -143,7 +121,7 @@ function (angular, $) {
               if(res) {
                 $scope.like.light = false;
                 $scope.like.id = null;
-                $scope.content.vote_count--;
+                $scope.content.count_lights--;
               }
             });
           } else {
@@ -151,13 +129,13 @@ function (angular, $) {
               if(res) {
                 $scope.like.light = true;
                 $scope.like.id = res.insertId;
-                $scope.content.vote_count++;
-                
+                $scope.content.count_lights++;
+
                 if(window.android){
                   var data = {
                     'appName': $scope.appInfo.title,
                     'content': $(('<b>'+$scope.content.content+'</b>').replace(/<br[\s]?[\/]?\>/gi, '\n').trim()).text(),
-                    'title': $scope.content.name,
+                    'title': $scope.userConnection.kakao.username+'님이 '+$scope.content.title+' 사연을 좋아합니다.',
                     'marketUrl': $scope.appInfo.android.url,
                     'currentUrl': $scope.appInfo.currentUrl,
                     'appId': $scope.appInfo.android.appId
@@ -176,26 +154,16 @@ function (angular, $) {
       $scope.write = {
         'user_id': $scope.userInfo.id,
         'title': '',
-        'description': '',
         'content': '',
-        'variables': [{'value':''}],
         'is_anonymous':false
-      };
-      
-      $scope.addVariables = function(){
-        $scope.write.variables.push({'value':''});
       };
       
       $scope.contentSave = function(){
         new ContentSave($scope.write).then(function(res){
           if(res.insertId) {
-            $scope.move('/content/'+res.insertId);
-          } else {
-            var tmp = [];
-            for(var i in $scope.write.variables) {
-              tmp.push({'value':$scope.write.variables[i]});
-            }
-            $scope.write.variables = tmp;
+            $scope.contents.data = [];
+            $scope.contents.page = 1;
+            $scope.move('/app/'+res.insertId);
           }
         });
       };
@@ -208,7 +176,7 @@ function (angular, $) {
           'content': $(('<b>'+($scope.content.content ? $scope.content.content : '')+'</b>').replace(/<br[\s]?[\/]?\>/gi, '\n').trim()).text(),
           'currentImage': $scope.content.thumb.split('|')[0],
           'currentUrl': $scope.appInfo.currentUrl,
-          'title': $scope.content.name,
+          'title': $scope.content.title,
           'marketUrl': $scope.appInfo.android.url,
           'appId': $scope.appInfo.android.appId
         };

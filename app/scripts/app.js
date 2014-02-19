@@ -96,16 +96,16 @@ define([
           scrollPos: 0
         };
         
-        var appname = 'gagnuts';
+        var appname = 'greennuts';
         $scope.appInfo = $rootScope.appInfo = {
-          'title': '개그너츠',
+          'title': '그린너츠',
           'webUrl': 'http://nut.gy/'+appname,
           'mailto': 'mailto:nuts@jumpingnuts.com',
           'company': 'Jumping Nuts Inc.',
           'establishmentYear': '2013',
           'api' : {
             'baseUrl': 'http://api.jumpingnuts.com',  //상용
-    //        'baseUrl': 'http://dev.jumpingnuts.com:9010', //개발
+//            'baseUrl': 'http://dev.jumpingnuts.com:9000', //개발
             'clientId': '0441c0011f37fec037843fcfe314366f',
             'responseType': 'token',
             'openType': 'iframe'//iframe, opener
@@ -124,7 +124,7 @@ define([
             'trends': {'name':'트랜드', 'order':1},
             'best': {'name': '베스트', 'order':2},
             'new': {'name': '새 글', 'order':3},
-            //'mine': {'name': '내가 만든 앱', 'hide':true, 'order':4}
+            'mine': {'name': '내가 올린 사연', 'hide':true, 'order':4}
           },
         };
         

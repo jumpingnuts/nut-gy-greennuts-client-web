@@ -7,11 +7,11 @@
     <h4 class="row">
       <div class="col-xs-11">
         <a ng-click="saveScrollMove('app/'+content.id, $event);">
-          {{content.name}}
+          {{content.title}}
         </a>
         <small class="text-success">
           <i class="fa fa-thumbs-o-up"></i>
-          {{content.vote_count?content.vote_count:0}}
+          {{content.count_lights?content.count_lights:0}}
           <small><p>{{content.created}}</p></small>
         </small>
       </div>
@@ -20,22 +20,7 @@
       </div>
     </h4>
     
-    <!-- ng-if: content.items.name -->
-    <div class="row" ng-if="content.items.name">
-      <div class="col-xs-6" style="height:120px; overflow:hidden;">
-        <img width="100%" ng-src="{{content.items.thumb}}"/>
-      </div>
-      <div class="col-xs-6" style="overflow:hidden;">
-        <p> {{content.items.name}}...</p>
-      </div>
-    </div>
-    
-    <!-- ng-if: !content.items.name -->
-    <div class="row" ng-if="!content.items.name">
-      <div class="col-xs-12" style="height:200px; overflow:hidden;">
-        <img width="100%" ng-src="{{content.items.thumb}}"/>
-      </div>
-    </div>
+    <p> {{content.content}}...</p>
     
     <hr />
     <!--<p><a class="btn btn-default" href="/kakaoapp/#!/app/{app.id}">더 읽기 &raquo;</a></p> -->

@@ -174,7 +174,7 @@ function (angular, $) {
         var data = {
           'appName': $scope.appInfo.title,
           'content': $(('<b>'+($scope.content.content ? $scope.content.content : '')+'</b>').replace(/<br[\s]?[\/]?\>/gi, '\n').trim()).text(),
-          'currentImage': $scope.content.thumb.split('|')[0],
+          'currentImage': '',
           'currentUrl': $scope.appInfo.currentUrl,
           'title': $scope.content.title,
           'marketUrl': $scope.appInfo.android.url,

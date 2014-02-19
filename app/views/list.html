@@ -1,0 +1,43 @@
+<div class="row" ng-scroll-event="listLoad()">
+  <div class="col-lg-12">
+    <h3>{{nav.items[nav.active].name}}</h3>
+    <hr />
+  </div>
+  <div ng-repeat="content in contents.data" class="col-lg-4 col-md-6 col-sm-6 col-xs-12" ng-click="saveScrollMove('app/'+content.id, $event);">
+    <h4 class="row">
+      <div class="col-xs-11">
+        <a ng-click="saveScrollMove('app/'+content.id, $event);">
+          {{content.name}}
+        </a>
+        <small class="text-success">
+          <i class="fa fa-thumbs-o-up"></i>
+          {{content.vote_count?content.vote_count:0}}
+          <small><p>{{content.created}}</p></small>
+        </small>
+      </div>
+      <div class="col-xs-1" ng-class="{hide:nav.active!='mine'}">
+        <span class="glyphicon glyphicon-remove-circle" ng-click="deleteContent($event);" data-id="{{content.id}}"></span>
+      </div>
+    </h4>
+    
+    <!-- ng-if: content.items.name -->
+    <div class="row" ng-if="content.items.name">
+      <div class="col-xs-6" style="height:120px; overflow:hidden;">
+        <img width="100%" ng-src="{{content.items.thumb}}"/>
+      </div>
+      <div class="col-xs-6" style="overflow:hidden;">
+        <p> {{content.items.name}}...</p>
+      </div>
+    </div>
+    
+    <!-- ng-if: !content.items.name -->
+    <div class="row" ng-if="!content.items.name">
+      <div class="col-xs-12" style="height:200px; overflow:hidden;">
+        <img width="100%" ng-src="{{content.items.thumb}}"/>
+      </div>
+    </div>
+    
+    <hr />
+    <!--<p><a class="btn btn-default" href="/kakaoapp/#!/app/{app.id}">더 읽기 &raquo;</a></p> -->
+  </div>
+</div>

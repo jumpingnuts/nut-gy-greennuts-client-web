@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-offset-4 col-md-4">
+    <h3>회원가입</h3>
+    <form class="form" ng-submit="userRegist();">
+      <div class="form-group">
+        <input type="email" name="email" ng-model="regist.email" placeholder="아이디" class="form-control" required="true">
+      </div>
+      <div class="form-group">
+        <input type="name" name="name" ng-model="regist.name" placeholder="닉네임" class="form-control" required="true">
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" ng-model="regist.password" placeholder="패스워드" class="form-control" required="true">
+      </div>
+      <div class="form-group">
+        <input type="password" name="passwordChk" ng-model="regist.passwordChk" placeholder="패스워드 확인" class="form-control" required="true">
+      </div>
+      
+      <div class="form-group">
+        <select name="age" ng-model="regist.age" class="form-control">
+          <option value="">선택 없음</option>
+          <option value="10">10대 미만</option>
+          <option value="20">20대</option>
+          <option value="30">30대</option>
+          <option value="40">40대</option>
+          <option value="50">50대</option>
+          <option value="60">60대 이상</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="radio" name="gender" ng-model="regist.gender" ng-value="male"/> 남
+        &nbsp;&nbsp;
+        <input type="radio" name="gender" ng-model="regist.gender" ng-value="female"/> 여
+      </div>
+      <button type="submit" class="btn btn-info">회원가입</button>
+    </form>
+  </div>
+</div>

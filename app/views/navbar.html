@@ -1,0 +1,54 @@
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+
+      <button type="button" 
+        class="navbar-toggle"
+        ng-click="nav.navCollapsed = !nav.navCollapsed">
+
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+
+      </button>
+        
+      <a class="navbar-brand" href="#/">
+        <b ng-bind="appInfo.title"></b> <i class="fa fa-lightbulb-o"></i>
+      </a>
+
+    </div>
+
+    <div class="navbar-collapse" ng-class="{collapse:nav.navCollapsed}">
+
+      <ul class="nav navbar-nav">
+        <li ng-repeat="item in nav.items | orderObjectBy:'order'" ng-class="{active:nav.active==item.key, hide:item.hide&&!userInfo.isLogin}"><a ng-href="#/list/{{item.key}}" ng-bind="item.name"></a></li>
+      </ul>
+
+      <!-- user info -->
+      <div class="navbar-right">
+        <form class="navbar-form" ng-class="{hide:userInfo.isLogin}">
+          <a ng-href="#/login?redirectUrl={{appInfo.currentPath}}">
+            <button type="submit" class="btn btn-info">로그인</button>
+          </a>
+          <a href="#/regist">
+            <button type="button" class="btn btn-warning">회원가입</button>
+          </a>
+        </form>
+        <div class="navbar-form" ng-class="{hide:!userInfo.isLogin}">
+<!--
+          <a href="#/write">
+            <button type="button" class="btn btn-info">
+              개그 올리기
+            </button>
+          </a>
+-->
+          <button type="button" class="btn btn-danger" ng-click="logout();">
+            로그아웃
+          </button>
+        </div>
+      </div>
+      <!-- /user info -->
+
+    </div><!--/.navbar-collapse -->
+  </div>
+</div>

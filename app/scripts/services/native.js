@@ -6,12 +6,12 @@ define(['angular'], function (angular) {
       return $resource($rootScope.appInfo.api.baseUrl+'/api/notification/regist');
     }])
     
-    .factory('NativeFunc', ['Noti', function(Noti){
+    .factory('NativeFunc', ['Noti', '$rootScope', function(Noti, $rootScope){
       return {
         'notiRegist': function(username, marketUrl){
           var self = this;
           var param = JSON.parse(window.android.getRegId());
-          param.type = 'gagnuts';
+          param.type = $rootScope.appInfo.android.appname;
           new Noti.save(param, function(res) {
             if(res.insertId > 0) {
               var data = {
